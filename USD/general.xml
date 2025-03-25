@@ -1,1 +1,199 @@
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nexus>
+<nexus version="1.0">
+    <category name="General">
+        <node image="script.svg" className="ActiveStage" zValue="11" enabled="True" isExpanded="True" virtualName="ActiveStage" action="custompy" id="82" backgroundColor="RGBA(120,70,215,200)" type="simplenode">
+            <viewblocks isExpanded="False">
+                <rect width="100" x="-1215.4397522521867" height="100" y="-1087.6224805643355"/>
+            </viewblocks>
+            <attributeblocks isExpanded="1">
+                <attributeblock isExpanded="False" name="Code Parameters" action="default">
+                    <attribute key="selectInputNodes" enabled="True" value="True" label="Select Input Nodes" action="default" type="boolean"/>
+                    <separator/>
+                    <attribute method="open" key="filepath" enabled="True" value="" filter="Files(*.py)" label="Python File" action="default" type="filepath"/>
+                    <separator/>
+                    <attribute method="default" key="code" enabled="True" value="from pymxs import runtime as rt&#xa;from pxr import Usd, UsdUtils&#xa;&#xa;stageObject= rt.selection[0]&#xa;if stageObject:&#xa;&#x9;stageCache = UsdUtils.StageCache.Get()&#xa;&#x9;VexusGlobalStage = stageCache.Find(Usd.StageCache.Id.FromLongInt(stageObject.CacheId))&#xa;&#x9;VexusGlobalStage.Reload()" label="Code" action="default" type="textbox"/>
+                    <separator/>
+                    <attribute key="outputSelectedNodes" enabled="True" value="False" label="Output Node Selection" action="default" type="boolean"/>
+                    <separator/>
+                </attributeblock>
+                <attributeblock isExpanded="False" name="Parameters" action="properties"/>
+            </attributeblocks>
+            <inputs>
+                <item limit="0" name="" type="data"/>
+            </inputs>
+            <outputs>
+                <item limit="0" name="" type="data"/>
+            </outputs>
+        </node>
+        <node image="script.svg" className="subLayer" zValue="11" enabled="True" isExpanded="True" virtualName="Sublayer" action="custompy" id="83" backgroundColor="RGBA(120,70,215,200)" type="simplenode">
+            <viewblocks isExpanded="False">
+                <rect width="100" x="-1222.3410600449834" height="100" y="-1027.9001247829399"/>
+            </viewblocks>
+            <attributeblocks isExpanded="1">
+                <attributeblock isExpanded="False" name="Code Parameters" action="default">
+                    <attribute method="default" key="code" enabled="True" value="import os&#xa;from pxr import Sdf&#xa;&#xa;rootLayer = VexusGlobalStage.GetRootLayer()&#xa;layerPath = &quot;$:filepath.value&quot;&#xa;&#xa;if os.path.exists(layerPath):&#xa;&#x9;VexusLayer = Sdf.Layer.FindOrOpen(layerPath)&#xa;else:&#xa;&#x9;VexusLayer = Sdf.Layer.CreateNew()&#xa;rootLayer.subLayerPaths.insert(0, VexusLayer.identifier)&#xa;&#xa;&#xa;&#xa;if $:Target.value:&#xa;&#x9;VexusGlobalStage.SetEditTarget(VexusLayer)" label="Code" action="default" type="textbox"/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="Parameters" action="properties">
+                    <attribute method="open" key="filepath" enabled="True" value="F:/RenderPassesBuild/Scene/ENV.usd" filter="Files(*.usd)" label="USD File" action="default" type="filepath"/>
+                    <attribute key="Target" enabled="True" value="False" label="Set as Edit Target" action="default" type="boolean"/>
+                </attributeblock>
+            </attributeblocks>
+            <inputs>
+                <item limit="0" name="" type="data"/>
+            </inputs>
+            <outputs>
+                <item limit="0" name="" type="data"/>
+            </outputs>
+        </node>
+        <node image="script.svg" className="SelectPrims" zValue="14" enabled="True" isExpanded="True" virtualName="SelectPrims" action="custompy" id="87" backgroundColor="RGBA(120,70,215,200)" type="simplenode">
+            <viewblocks isExpanded="False">
+                <rect width="100" x="-1224.1433065851784" height="100" y="-887.57115087149998"/>
+            </viewblocks>
+            <attributeblocks isExpanded="1">
+                <attributeblock isExpanded="False" name="Code Parameters" action="default">
+                    <separator/>
+                    <attribute method="default" key="code" enabled="True" value="from pymxs import runtime as rt&#xa;from pxr import Usd, UsdUtils&#xa;&#xa;import fnmatch&#xa;&#xa;path = &quot;$:path.value&quot;&#xa;print(path)&#xa;&#xa;primSelection = [prim for prim in VexusGlobalStage.Traverse() if fnmatch.fnmatch(str(prim.GetPath()), path)]&#xa;&#xa;VexusGlobalPrimSelection = primSelection&#xa;print(VexusGlobalPrimSelection)" label="Code" action="default" type="textbox"/>
+                    <separator/>
+                    <attribute key="outputSelectedNodes" enabled="True" value="False" label="Output Node Selection" action="default" type="boolean"/>
+                    <separator/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="Parameters" action="properties">
+                    <attribute method="" key="path" enabled="True" value="/root/Car*" label="Prim Path" action="default" type="string"/>
+                </attributeblock>
+            </attributeblocks>
+            <inputs>
+                <item limit="0" name="" type="data"/>
+            </inputs>
+            <outputs>
+                <item limit="0" name="" type="data"/>
+            </outputs>
+        </node>
+        <node image="script.svg" className="DisplayColor" zValue="24" enabled="True" isExpanded="True" virtualName="DisplayColor" action="custompy" id="89" backgroundColor="RGBA(0,255,0,200)" type="simplenode">
+            <viewblocks isExpanded="False">
+                <rect width="100" x="-1227.0139371413993" height="100" y="-773.68470077728341"/>
+            </viewblocks>
+            <attributeblocks isExpanded="1">
+                <attributeblock isExpanded="True" name="Code Parameters" action="default">
+                    <separator/>
+                    <attribute method="default" key="code" enabled="True" value="from pymxs import runtime as rt&#xa;from pxr import Usd, UsdUtils, Sdf&#xa;&#xa;vis = $:VisMode.value&#xa;print(vis)&#xa;&#xa;for prim in VexusGlobalPrimSelection:&#xa;    prim.CreateAttribute(&quot;primvars:displayColor&quot;, Sdf.ValueTypeNames.Color3fArray).Set([(0, 1.0, 0)])&#xa;" label="Code" action="default" type="textbox"/>
+                    <separator/>
+                    <attribute key="outputSelectedNodes" enabled="True" value="False" label="Output Node Selection" action="default" type="boolean"/>
+                    <separator/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="Parameters" action="properties">
+                    <attribute key="VisMode" enabled="True" value="True" label="Visibility" action="default" type="boolean"/>
+                </attributeblock>
+            </attributeblocks>
+            <inputs>
+                <item limit="0" name="" type="data"/>
+            </inputs>
+            <outputs>
+                <item limit="0" name="" type="data"/>
+            </outputs>
+        </node>
+        <node image="script.svg" className="ExportToFile" zValue="11" enabled="True" isExpanded="True" virtualName="ExportToFile" action="custompy" id="92" backgroundColor="RGBA(120,70,215,200)" type="simplenode">
+            <viewblocks isExpanded="False">
+                <rect width="100" x="-1234.1481765655894" height="100" y="-655.38871379883142"/>
+            </viewblocks>
+            <attributeblocks isExpanded="1">
+                <attributeblock isExpanded="False" name="Code Parameters" action="default">
+                    <attribute method="default" key="code" enabled="True" value="import os&#xa;&#xa;VexusGlobalStage.GetRootLayer()&#xa;layerPath = &quot;$:filepath.value&quot;&#xa;&#xa;if not os.path.exists(os.path.dirname(layerPath)):&#xa;&#x9;os.makedirs(os.path.dirname(layerPath))&#xa;&#xa;rootLayer = VexusGlobalStage.GetRootLayer()&#xa;rootLayer.Export(layerPath)&#xa;" label="Code" action="default" type="textbox"/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="Parameters" action="properties">
+                    <attribute method="open" key="filepath" enabled="True" value="F:\RenderPassesBuild\$$SHOT\$$SHOT_$$PASS.usda" filter="Files(*.usd)" label="USD File" action="default" type="filepath"/>
+                    <attribute key="Target" enabled="True" value="False" label="Set as Edit Target" action="default" type="boolean"/>
+                </attributeblock>
+            </attributeblocks>
+            <inputs>
+                <item limit="0" name="" type="data"/>
+            </inputs>
+            <outputs>
+                <item limit="0" name="" type="data"/>
+            </outputs>
+        </node>
+        <node image="script.svg" className="AnonLayer" zValue="11" enabled="True" isExpanded="True" virtualName="AnonLayer" action="custompy" id="93" backgroundColor="RGBA(120,70,215,200)" type="simplenode">
+            <viewblocks isExpanded="False">
+                <rect width="100" x="-1230.3734802631782" height="100" y="-555.38871379883142"/>
+            </viewblocks>
+            <attributeblocks isExpanded="1">
+                <attributeblock isExpanded="False" name="Code Parameters" action="default">
+                    <attribute method="default" key="code" enabled="True" value="import os&#xa;&#xa;rootLayer = VexusGlobalStage.GetRootLayer()&#xa;layerPath = &quot;$:filepath.value&quot;&#xa;&#xa;VexusLayer = Sdf.Layer.CreateAnonymous(layerPath)&#xa;rootLayer.subLayerPaths.insert(0, VexusLayer.identifier)&#xa;&#xa;if $:Target.value:&#xa;&#x9;VexusGlobalStage.SetEditTarget(VexusLayer)" label="Code" action="default" type="textbox"/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="Parameters" action="properties">
+                    <attribute method="open" key="filepath" enabled="True" value="AnonTest" filter="Files(*.usd)" label="USD File" action="default" type="filepath"/>
+                    <attribute key="Target" enabled="True" value="True" label="Set as Edit Target" action="default" type="boolean"/>
+                </attributeblock>
+            </attributeblocks>
+            <inputs>
+                <item limit="0" name="" type="data"/>
+            </inputs>
+            <outputs>
+                <item limit="0" name="" type="data"/>
+            </outputs>
+        </node>
+        <node image="script.svg" className="PrimVisibility" zValue="11" enabled="True" isExpanded="True" virtualName="PrimVisibility" action="custompy" id="94" backgroundColor="RGBA(120,70,215,200)" type="simplenode">
+            <viewblocks isExpanded="False">
+                <rect width="100" x="-1229.4461343868529" height="100" y="-455.38871379883153"/>
+            </viewblocks>
+            <attributeblocks isExpanded="1">
+                <attributeblock isExpanded="True" name="Code Parameters" action="default">
+                    <separator/>
+                    <attribute method="default" key="code" enabled="True" value="from pymxs import runtime as rt&#xa;from pxr import Usd, UsdUtils, Sdf&#xa;&#xa;vis = $:VisMode.value&#xa;print(vis)&#xa;&#xa;if vis:&#xa;    for prim in VexusGlobalPrimSelection:&#xa;        prim.CreateAttribute(&quot;visibility&quot;, Sdf.ValueTypeNames.Token).Set(&quot;inherited&quot;)&#xa;else:&#xa;    for prim in VexusGlobalPrimSelection:&#xa;        prim.CreateAttribute(&quot;visibility&quot;, Sdf.ValueTypeNames.Token).Set(&quot;invisible&quot;)" label="Code" action="default" type="textbox"/>
+                    <separator/>
+                    <attribute key="outputSelectedNodes" enabled="True" value="False" label="Output Node Selection" action="default" type="boolean"/>
+                    <separator/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="Parameters" action="properties">
+                    <attribute key="VisMode" enabled="True" value="False" label="Visibility" action="default" type="boolean"/>
+                </attributeblock>
+            </attributeblocks>
+            <inputs>
+                <item limit="0" name="" type="data"/>
+            </inputs>
+            <outputs>
+                <item limit="0" name="" type="data"/>
+            </outputs>
+        </node>
+        <node image="script.svg" className="UsdMeshImport" zValue="22" enabled="True" isExpanded="True" virtualName="MeshImport" action="custompy" id="95" backgroundColor="RGBA(120,70,215,200)" type="simplenode">
+            <viewblocks isExpanded="False">
+                <rect width="100" x="-1224.9174706060699" height="100" y="-355.38871379883153"/>
+            </viewblocks>
+            <attributeblocks isExpanded="1">
+                <attributeblock isExpanded="False" name="Code Parameters" action="default">
+                    <attribute method="default" key="code" enabled="True" value="import os&#xa;import maxUsd&#xa;from pymxs import runtime as rt&#xa;from pxr import Usd, Sdf&#xa;&#xa;exportPath = Sdf.Path(&quot;$:meshPath.value&quot;)&#xa;VexusGlobalStage&#xa;&#xa;node = rt.getNodeByName(&quot;$:maxMesh.value&quot;)&#xa;print(node)&#xa;if node:&#xa;    nodeHandle = node.inode.handle&#xa;&#xa;    opts = maxUsd.USDSceneBuilderOptions()&#xa;    time = maxUsd.ExportTime(0.0, Usd.TimeCode(), True)&#xa;&#xa;    maxUsd.MeshConverter.ConvertToUSDMesh(nodeHandle, VexusGlobalStage, exportPath, opts, True, time)" label="Code" action="default" type="textbox"/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="Parameters" action="properties">
+                    <attribute method="" key="maxMesh" enabled="True" value="Cylinder001" label="Max Mesh Name" action="default" type="string"/>
+                    <attribute method="" key="meshPath" enabled="True" value="/root/ImportedMesh" label="Mesh Path" action="default" type="string"/>
+                </attributeblock>
+            </attributeblocks>
+            <inputs>
+                <item limit="0" name="" type="data"/>
+            </inputs>
+            <outputs>
+                <item limit="0" name="" type="data"/>
+            </outputs>
+        </node>
+        <node image="script.svg" className="FatternToFile" zValue="11" enabled="True" isExpanded="True" virtualName="FlatternToFile" action="custompy" id="96" backgroundColor="RGBA(120,70,215,200)" type="simplenode">
+            <viewblocks isExpanded="False">
+                <rect width="100" x="-1225.7016058206752" height="100" y="-246.32925636517624"/>
+            </viewblocks>
+            <attributeblocks isExpanded="1">
+                <attributeblock isExpanded="False" name="Code Parameters" action="default">
+                    <attribute method="default" key="code" enabled="True" value="import os&#xa;&#xa;VexusGlobalStage.GetRootLayer()&#xa;layerPath = &quot;$:filepath.value&quot;&#xa;&#xa;VexusGlobalStage.Export(layerPath)&#xa;" label="Code" action="default" type="textbox"/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="Parameters" action="properties">
+                    <attribute method="open" key="filepath" enabled="True" value="C:/Users/Ben/Desktop/FlatWithRef.usda" filter="Files(*.usd)" label="USD File" action="default" type="filepath"/>
+                    <attribute key="Target" enabled="True" value="True" label="Set as Edit Target" action="default" type="boolean"/>
+                </attributeblock>
+            </attributeblocks>
+            <inputs>
+                <item limit="0" name="" type="data"/>
+            </inputs>
+            <outputs>
+                <item limit="0" name="" type="data"/>
+            </outputs>
+        </node>
+    </category>
+</nexus>

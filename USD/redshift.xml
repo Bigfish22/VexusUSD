@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nexus>
+<nexus version="1.0">
+    <category name="Redshift">
+        <node image="script.svg" className="CustomPyNode" zValue="27" enabled="True" isExpanded="True" virtualName="DisableSkyBG" action="custompy" id="91" backgroundColor="RGBA(0,255,0,200)" type="simplenode">
+            <viewblocks isExpanded="False">
+                <rect width="100" x="-1230.0764383109795" height="100" y="-86.846004889586027"/>
+            </viewblocks>
+            <attributeblocks isExpanded="1">
+                <attributeblock isExpanded="True" name="Code Parameters" action="default">
+                    <separator/>
+                    <attribute method="default" key="code" enabled="True" value="from pymxs import runtime as rt&#xa;from pxr import Usd, UsdUtils, Sdf&#xa;&#xa;for prim in VexusGlobalPrimSelection:&#xa;    prim.CreateAttribute(&quot;redshift:light:PhysicalSky_background_enable&quot;, Sdf.ValueTypeNames.Bool).Set(False)&#xa;" label="Code" action="default" type="textbox"/>
+                    <separator/>
+                    <attribute key="outputSelectedNodes" enabled="True" value="False" label="Output Node Selection" action="default" type="boolean"/>
+                    <separator/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="Parameters" action="properties">
+                    <attribute key="VisMode" enabled="True" value="True" label="Visibility" action="default" type="boolean"/>
+                </attributeblock>
+            </attributeblocks>
+            <inputs>
+                <item limit="0" name="" type="data"/>
+            </inputs>
+            <outputs>
+                <item limit="0" name="" type="data"/>
+            </outputs>
+        </node>
+        <node image="script.svg" className="RSOutputPath" zValue="17" enabled="True" isExpanded="True" virtualName="RSOutputPath" action="custompy" id="85" backgroundColor="RGBA(0,255,0,200)" type="simplenode">
+            <viewblocks isExpanded="False">
+                <rect width="100" x="-1230.1410880333162" height="100" y="0"/>
+            </viewblocks>
+            <attributeblocks isExpanded="1">
+                <attributeblock isExpanded="True" name="Code Parameters" action="default">
+                    <separator/>
+                    <attribute method="default" key="code" enabled="True" value="from pymxs import runtime as rt&#xa;from pxr import Usd, UsdUtils, Sdf&#xa;&#xa;prim = VexusGlobalStage.GetPrimAtPath(&quot;/Render/Redshift1&quot;)&#xa;&#xa;outputPath = &quot;$:filepath.value&quot;&#xa;&#xa;prim.CreateAttribute(&quot;redshift:global:RS_outputFileName&quot;, Sdf.ValueTypeNames.String).Set(outputPath)&#xa;" label="Code" action="default" type="textbox"/>
+                    <separator/>
+                    <attribute key="outputSelectedNodes" enabled="True" value="False" label="Output Node Selection" action="default" type="boolean"/>
+                    <separator/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="Parameters" action="properties">
+                    <attribute method="save" key="filepath" enabled="True" value="F:/RenderPassesBuild/$$SHOT/Outputs/$$SHOT_$$PASS.exr" filter="Files(*.exr)" label="Output Path" action="default" type="filepath"/>
+                </attributeblock>
+            </attributeblocks>
+            <inputs>
+                <item limit="0" name="" type="data"/>
+            </inputs>
+            <outputs>
+                <item limit="0" name="" type="data"/>
+            </outputs>
+        </node>
+        <node image="script.svg" className="RSObjProps" zValue="18" enabled="True" isExpanded="True" virtualName="RSObjProps" action="custompy" id="90" backgroundColor="RGBA(38,255,56,200)" type="simplenode">
+            <viewblocks isExpanded="False">
+                <rect width="100" x="-1229.1867768870929" height="100" y="100"/>
+            </viewblocks>
+            <attributeblocks isExpanded="1">
+                <attributeblock isExpanded="False" name="Code Parameters" action="default">
+                    <separator/>
+                    <attribute method="default" key="code" enabled="True" value="from pxr import Usd, UsdUtils, Sdf&#xa;&#xa;for prim in VexusGlobalPrimSelection:&#xa;    #Vis&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_PRIMARYRAYVISIBLE&quot;, Sdf.ValueTypeNames.Bool).Set($:PRIMARYRAYVISIBLE.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_SECONDARYRAYVISIBLE&quot;, Sdf.ValueTypeNames.Bool).Set($:SECONDARYRAYVISIBLE.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_SHADOWCASTER&quot;, Sdf.ValueTypeNames.Bool).Set($:SHADOWCASTER.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_SHADOWRECEIVER&quot;, Sdf.ValueTypeNames.Bool).Set($:SHADOWRECEIVER.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_AOCASTER&quot;, Sdf.ValueTypeNames.Bool).Set($:AOCASTER.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_NOSELFSHADOW&quot;, Sdf.ValueTypeNames.Bool).Set($:SELFSHADOWS.value)&#xa;    &#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_REFLECTIONVISIBLE&quot;, Sdf.ValueTypeNames.Bool).Set($:REFLECTIONVISIBLE.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_REFRACTIONVISIBLE&quot;, Sdf.ValueTypeNames.Bool).Set($:REFRACTIONVISIBLE.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_REFLECTIONCASTER&quot;, Sdf.ValueTypeNames.Bool).Set($:REFLECTIONCASTER.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_REFRACTIONCASTER&quot;, Sdf.ValueTypeNames.Bool).Set($:REFRACTIONCASTER.value)&#xa;    &#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_FGVISIBLE&quot;, Sdf.ValueTypeNames.Bool).Set($:FGVISIBLE.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_CAUSTICVISIBLE&quot;, Sdf.ValueTypeNames.Bool).Set($:CAUSTICVISIBLE.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_FGCASTER&quot;, Sdf.ValueTypeNames.Bool).Set($:FGCASTER.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_FORCEBRUTEFORCEGI&quot;, Sdf.ValueTypeNames.Bool).Set($:FORCEBRUTEFORCEGI.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:MESHFLAG_CAUSTICSRECEIVER&quot;, Sdf.ValueTypeNames.Bool).Set($:CAUSTICSRECEIVER.value)&#xa;    &#xa;    #Matte&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:RS_objprop_matte_enable&quot;, Sdf.ValueTypeNames.Bool).Set($:MATTE_ENABLE.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:RS_objprop_matte_showbackg&quot;, Sdf.ValueTypeNames.Bool).Set($:SHOWBACKGROUND.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:RS_objprop_matte_applysec&quot;, Sdf.ValueTypeNames.Bool).Set($:APPLYTOSECONDARYRAYS.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:RS_objprop_matte_abyml&quot;, Sdf.ValueTypeNames.Bool).Set($:AFFECTEDBYMATTELIGHTS.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:RS_objprop_matte_includePM&quot;, Sdf.ValueTypeNames.Bool).Set($:INCLUDEINPUZZLEMATTE.value)&#xa;&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:RS_objprop_matte_alpha&quot;, Sdf.ValueTypeNames.Float).Set($:ALPHA.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:RS_objprop_matte_reflscale&quot;, Sdf.ValueTypeNames.Float).Set($:REFLECTIONSCALE.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:RS_objprop_matte_refrscale&quot;, Sdf.ValueTypeNames.Float).Set($:REFRACTIONSCALE.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:RS_objprop_matte_diffscale&quot;, Sdf.ValueTypeNames.Float).Set($:DIFFUSESCALE.value)&#xa;    &#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:RS_objprop_matte_shadowenable&quot;, Sdf.ValueTypeNames.Bool).Set($:ENABLESHADOW.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:RS_objprop_matte_shadowsFromM&quot;, Sdf.ValueTypeNames.Bool).Set($:RECEIVESHADOWSFROMMATTES.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:RS_objprop_matte_shadowalpha&quot;, Sdf.ValueTypeNames.Float).Set($:SHADOWAFFECTSALPHA.value)&#xa;    prim.CreateAttribute(&quot;primvars:redshift:object:RS_objprop_matte_shadowtrans&quot;, Sdf.ValueTypeNames.Float).Set($:SHADOWTRANSARENCY.value)" label="Code" action="default" type="textbox"/>
+                    <separator/>
+                    <attribute key="outputSelectedNodes" enabled="True" value="False" label="Output Node Selection" action="default" type="boolean"/>
+                    <separator/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="Visibility" action="properties">
+                    <attribute key="OVERRIDE" enabled="True" value="True" label="Override Visibility" action="default" type="boolean"/>
+                    <attribute key="PRIMARYRAYVISIBLE" enabled="True" value="True" label="Primary Ray Visible" action="default" type="boolean"/>
+                    <attribute key="SECONDARYRAYVISIBLE" enabled="True" value="True" label="Secondary Ray Visible" action="default" type="boolean"/>
+                    <attribute key="SHADOWCASTER" enabled="True" value="True" label="Cast Shadows" action="default" type="boolean"/>
+                    <attribute key="SHADOWRECEIVER" enabled="True" value="True" label="Receives Shadows" action="default" type="boolean"/>
+                    <attribute key="AOCASTER" enabled="True" value="True" label="Casts AO" action="default" type="boolean"/>
+                    <attribute key="SELFSHADOWS" enabled="True" value="True" label="Self-Shadows" action="default" type="boolean"/>
+                    <separator/>
+                    <attribute key="REFLECTIONVISIBLE" enabled="True" value="True" label="Visible in Reflections" action="default" type="boolean"/>
+                    <attribute key="REFRACTIONVISIBLE" enabled="True" value="True" label="Visible in Refractions" action="default" type="boolean"/>
+                    <attribute key="REFLECTIONCASTER" enabled="True" value="True" label="Casts Reflections" action="default" type="boolean"/>
+                    <attribute key="REFRACTIONCASTER" enabled="True" value="True" label="Casts Refractions" action="default" type="boolean"/>
+                    <separator/>
+                    <attribute key="FGVISIBLE" enabled="True" value="True" label="Visible to GI" action="default" type="boolean"/>
+                    <attribute key="CAUSTICVISIBLE" enabled="True" value="True" label="Visible to Caustics" action="default" type="boolean"/>
+                    <attribute key="FGCASTER" enabled="True" value="True" label="Receives GI" action="default" type="boolean"/>
+                    <attribute key="FORCEBRUTEFORCEGI" enabled="True" value="False" label="Force Brute-Force GI" action="default" type="boolean"/>
+                    <attribute key="CAUSTICSRECEIVER" enabled="True" value="True" label="Receives Caustics" action="default" type="boolean"/>
+                    <attribute key="temp5" enabled="True" value="False" label="Casts Reflection Caustics" action="default" type="boolean"/>
+                    <attribute key="temp6" enabled="True" value="False" label="Casts Refraction Caustics" action="default" type="boolean"/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="Matte" action="properties">
+                    <attribute key="MATTE_ENABLE" enabled="True" value="False" label="Enable" action="default" type="boolean"/>
+                    <attribute key="SHOWBACKGROUND" enabled="True" value="True" label="Show Background" action="default" type="boolean"/>
+                    <attribute key="APPLYTOSECONDARYRAYS" enabled="True" value="False" label="Apply to Secondary Rays" action="default" type="boolean"/>
+                    <attribute key="AFFECTEDBYMATTELIGHTS" enabled="True" value="False" label="Affected by Matte lights" action="default" type="boolean"/>
+                    <attribute key="INCLUDEINPUZZLEMATTE" enabled="True" value="False" label="Include in Puzzle Mattes" action="default" type="boolean"/>
+                    <separator/>
+                    <attribute minValue="-1" maxValue="1" key="ALPHA" enabled="True" value="1" label="Alpha" action="default" type="float"/>
+                    <attribute minValue="0" maxValue="1" key="REFLECTIONSCALE" enabled="True" value="0" label="Reflection Scale" action="default" type="float"/>
+                    <attribute minValue="0" maxValue="1" key="REFRACTIONSCALE" enabled="True" value="0" label="Refraction Scale" action="default" type="float"/>
+                    <attribute minValue="0" maxValue="1" key="DIFFUSESCALE" enabled="True" value="0" label="Diffuse Scale" action="default" type="float"/>
+                    <separator/>
+                    <attribute key="ENABLESHADOW" enabled="True" value="False" label="Enable Shadows" action="default" type="boolean"/>
+                    <attribute key="RECEIVESHADOWSFROMMATTES" enabled="True" value="True" label="Receive Shadows From Mattes" action="default" type="boolean"/>
+                    <attribute key="SHADOWAFFECTSALPHA" enabled="True" value="False" label="Shadow Affects Alpha" action="default" type="boolean"/>
+                    <attribute minValue="0" maxValue="1" key="SHADOWTRANSARENCY" enabled="True" value="0" label="Shadow Trans." action="default" type="float"/>
+                </attributeblock>
+            </attributeblocks>
+            <inputs>
+                <item limit="0" name="" type="data"/>
+            </inputs>
+            <outputs>
+                <item limit="0" name="" type="data"/>
+            </outputs>
+        </node>
+    </category>
+</nexus>

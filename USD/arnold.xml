@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nexus>
+<nexus version="1.0">
+    <category name="Arnold">
+        <node image="script.svg" className="ArnoldObjProps" zValue="11" enabled="True" isExpanded="True" virtualName="ArnoldObjProps" action="custompy" id="97" backgroundColor="RGBA(38,255,56,200)" type="simplenode">
+            <viewblocks isExpanded="False">
+                <rect width="100" x="-1227.7453072506996" height="100" y="283.32899918362835"/>
+            </viewblocks>
+            <attributeblocks isExpanded="1">
+                <attributeblock isExpanded="False" name="Code Parameters" action="default">
+                    <separator/>
+                    <attribute method="default" key="code" enabled="True" value="from pxr import Usd, UsdUtils, Sdf&#xa;&#xa;#this was a 1am idea, dont judge&#xa;SpecularRefl = (str(int($:SpecularRefl.value)))&#xa;DiffuseRefl = (str(int($:DiffuseRefl.value)))&#xa;VolumeScat = (str(int($:VolumeScat.value)))&#xa;SpecularTrans = (str(int($:SpecularTrans.value)))&#xa;DiffuseTrans = (str(int($:DiffuseTrans.value)))&#xa;CastShadows = (str(int($:CastShadows.value)))&#xa;Camera = (str(int($:Camera.value)))&#xa;&#xa;visibility = int(&quot;1&quot; + SpecularRefl + DiffuseRefl + VolumeScat + SpecularTrans + DiffuseTrans + CastShadows + Camera, 2)&#xa;&#xa;for prim in VexusGlobalPrimSelection:&#xa;&#x9;prim.CreateAttribute(&quot;primvars:arnold:visibility&quot;, Sdf.ValueTypeNames.UChar).Set(visibility)&#xa;&#x9;&#xa;&#x9;prim.CreateAttribute(&quot;primvars:arnold:receive_shadows&quot;, Sdf.ValueTypeNames.Bool).Set($:ReceiveShadows.value)&#xa;&#x9;prim.CreateAttribute(&quot;primvars:arnold:self_shadows&quot;, Sdf.ValueTypeNames.Bool).Set($:SelfShadows.value)&#xa;&#xa;&#x9;#prim.CreateAttribute(&quot;primvars:arnold:sidedness&quot;, Sdf.ValueTypeNames.UChar).Set($:DoubleSided.value)&#xa;&#x9;prim.CreateAttribute(&quot;primvars:arnold:invert_normals&quot;, Sdf.ValueTypeNames.Bool).Set($:InvertedNormals.value)&#xa;&#x9;prim.CreateAttribute(&quot;primvars:arnold:opaque&quot;, Sdf.ValueTypeNames.Bool).Set($:Opaque.value)&#xa;&#x9;prim.CreateAttribute(&quot;primvars:arnold:matte&quot;, Sdf.ValueTypeNames.Bool).Set($:Matte.value)&#xa;" label="Code" action="default" type="textbox"/>
+                    <separator/>
+                    <attribute key="outputSelectedNodes" enabled="True" value="False" label="Output Node Selection" action="default" type="boolean"/>
+                    <separator/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="Visibility" action="properties">
+                    <attribute key="Camera" enabled="True" value="True" label="Camera (Primary Rays)" action="default" type="boolean"/>
+                    <attribute key="DiffuseRefl" enabled="True" value="True" label="Diffuse Reflections" action="default" type="boolean"/>
+                    <attribute key="SpecularRefl" enabled="True" value="True" label="Specular Reflections" action="default" type="boolean"/>
+                    <attribute key="DiffuseTrans" enabled="True" value="True" label="Diffuse Transmission" action="default" type="boolean"/>
+                    <attribute key="SpecularTrans" enabled="True" value="True" label="Specular Transmission" action="default" type="boolean"/>
+                    <attribute key="VolumeScat" enabled="True" value="True" label="Volume Scattering" action="default" type="boolean"/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="Shadows" action="properties">
+                    <attribute key="CastShadows" enabled="True" value="True" label="Cast Shadows" action="default" type="boolean"/>
+                    <attribute key="ReceiveShadows" enabled="True" value="True" label="Recieve Shadows" action="default" type="boolean"/>
+                    <attribute key="SelfShadows" enabled="True" value="True" label="Self Shadows" action="default" type="boolean"/>
+                </attributeblock>
+                <attributeblock isExpanded="True" name="General" action="properties">
+                    <attribute key="DoubleSided" enabled="True" value="True" label="Double Sided" action="default" type="boolean"/>
+                    <attribute key="InvertedNormals" enabled="True" value="False" label="Inverted Normals" action="default" type="boolean"/>
+                    <attribute key="Opaque" enabled="True" value="True" label="Opaque" action="default" type="boolean"/>
+                    <attribute key="Matte" enabled="True" value="False" label="Matte" action="default" type="boolean"/>
+                </attributeblock>
+            </attributeblocks>
+            <inputs>
+                <item limit="0" name="" type="data"/>
+            </inputs>
+            <outputs>
+                <item limit="0" name="" type="data"/>
+            </outputs>
+        </node>
+    </category>
+</nexus>
